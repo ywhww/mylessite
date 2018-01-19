@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <title>Title</title>
@@ -34,65 +36,48 @@
 <body class=" login">
     <!-- BEGIN LOGO -->
     <div class="logo">
-        <a href="index.html">
-            <img src="../assets/pages/img/logo-big-white.png" style="height: 17px;" alt="" /> </a>
+            <h1 class="font-white bold">脚手架</h1>
     </div>
     <!-- END LOGO -->
 
     <!-- BEGIN LOGIN -->
     <div class="content">
         <!-- BEGIN LOGIN FORM -->
-        <form class="login-form" action="index.html" method="post">
+        <form class="login-form" action="/login" method="post">
             <div class="form-title">
-                <span class="form-title">Welcome.</span>
-                <span class="form-subtitle">Please login.</span>
+                <span class="form-title">欢迎来到脚手架平台.</span>
+                <span class="form-subtitle">请登陆.</span>
             </div>
-            <div class="alert alert-danger display-hide">
+            <div class="alert alert-danger ${message==null? 'display-hide' : ''}">
                 <button class="close" data-close="alert"></button>
-                <span> Enter any username and password. </span>
+                <span> ${message==null? "请输入账号或者密码" : message} </span>
             </div>
             <div class="form-group">
                 <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-                <label class="control-label visible-ie8 visible-ie9">Username</label>
-                <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="Username" name="username" /> </div>
+                <label class="control-label visible-ie8 visible-ie9">用户名</label>
+                <input class="form-control form-control-solid placeholder-no-fix" type="text" autocomplete="off" placeholder="用户名" name="username" /> </div>
             <div class="form-group">
-                <label class="control-label visible-ie8 visible-ie9">Password</label>
-                <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" /> </div>
+                <label class="control-label visible-ie8 visible-ie9">密码</label>
+                <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="密码" name="password" /> </div>
+            <c:if test="${isValidateCodeLogin}">
+                <div class="form-group">
+                    <img id="imgValidateCode" src="/validate/code" style="cursor: pointer;" />
+                    <input id="validateCode" name="validateCode" type="text" class="form-control pull-left" placeholder="验证码" style="width: 170px;">
+                </div>
+            </c:if>
             <div class="form-actions">
-                <button type="submit" class="btn red btn-block uppercase">Login</button>
+                <button type="submit" class="btn red btn-block uppercase">登陆</button>
             </div>
             <div class="form-actions">
                 <div class="pull-left">
                     <label class="rememberme mt-checkbox mt-checkbox-outline">
-                        <input type="checkbox" name="remember" value="1" /> Remember me
+                        <input type="checkbox" name="remember" value="1" />记住我
                         <span></span>
                     </label>
                 </div>
                 <div class="pull-right forget-password-block">
-                    <a href="javascript:;" id="forget-password" class="forget-password">Forgot Password?</a>
+                    <a href="javascript:;" id="forget-password" class="forget-password">忘记密码?</a>
                 </div>
-            </div>
-            <div class="login-options">
-                <h4 class="pull-left">Or login with</h4>
-                <ul class="social-icons pull-right">
-                    <li>
-                        <a class="social-icon-color facebook" data-original-title="facebook" href="javascript:;"></a>
-                    </li>
-                    <li>
-                        <a class="social-icon-color twitter" data-original-title="Twitter" href="javascript:;"></a>
-                    </li>
-                    <li>
-                        <a class="social-icon-color googleplus" data-original-title="Goole Plus" href="javascript:;"></a>
-                    </li>
-                    <li>
-                        <a class="social-icon-color linkedin" data-original-title="Linkedin" href="javascript:;"></a>
-                    </li>
-                </ul>
-            </div>5
-            <div class="create-account">
-                <p>
-                    <a href="javascript:;" class="btn-primary btn" id="register-btn">Create an account</a>
-                </p>
             </div>
         </form>
     </div>
@@ -117,6 +102,11 @@
     <!-- BEGIN PAGE LEVEL SCRIPTS -->
     <script src="/static/assets/pages/scripts/login.min.js" type="text/javascript"></script>
     <!-- END PAGE LEVEL SCRIPTS -->
-
+    <script type="text/javascript">
+        // 验证码切换
+        $("#imgValidateCode").bind("click", function () {
+            $(this).attr("src", "/validate/code?" + Math.random());
+        });
+    </script>
 </body>
 </html>

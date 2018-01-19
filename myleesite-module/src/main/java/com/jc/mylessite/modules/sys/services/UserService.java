@@ -25,4 +25,14 @@ public class UserService {
         return null;
     }
 
+    public SysUser findUserByName(String username){
+        Example example = new Example(SysUser.class);
+        example.createCriteria().andEqualTo("name",username);
+        List<SysUser> sysUsers = userMapper.selectByExample(example);
+        if (sysUsers!=null&&sysUsers.size()==1){
+            return sysUsers.get(0);
+        }
+        return null;
+    }
+
 }

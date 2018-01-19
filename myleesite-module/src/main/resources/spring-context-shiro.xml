@@ -9,7 +9,6 @@
             <value>
                 /static/** = anon
                 /validate/code = anon
-                /tan = anon
                 /login = authc
                 /logout = logout
                 /** = user
